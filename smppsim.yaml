@@ -1,0 +1,35 @@
+version: "3.7"
+services:
+  smppsim:
+    image: docker.cadvance.co.za/docker/av_container_smppsim:latest
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 2000M
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+        order: start-first
+      rollback_config:
+        parallelism: 0
+        delay: 10s
+        failure_action: continue
+        monitor: 60s
+        max_failure_ratio: 0
+        order: start-first
+    volumes:
+      - "/opt/docker/logs/smppsim/smpp-sim.log:/smppsim/smpp-sim.log"
+    ports:
+      - "8989:8989"
+      - "2775:2775"
+    networks:
+      - host_net
+networks:
+    host_net:
+      external:
+        name: bridge
