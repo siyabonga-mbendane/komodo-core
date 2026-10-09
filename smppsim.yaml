@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   smppsim:
-    image: docker.cadvance.co.za/docker/av_container_smppsim:latest
+    image: docker.cadvance.co.za/docker/av_container_smppsim:late
     deploy:
       replicas: 1
       resources:
